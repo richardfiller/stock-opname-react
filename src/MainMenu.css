@@ -1,0 +1,49 @@
+/* MainMenu.css */
+.menu-footer {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  text-align: left;
+  font-size: 0.75em; /* lebih kecil dari sebelumnya */
+  color: #555;
+}
+
+
+.main-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.menu-buttons {
+  margin-top: 20px;
+}
+
+.menu-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1em;
+  margin: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+} /* Kurung kurawal penutup ditambahkan di sini */
+
+.menu-button:hover {
+  background-color: #0056b3;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+.menu-logo {
+  width: 150px;
+  height: auto; /* biar proporsional */
+  margin-bottom: 20px; /* jarak ke bawah jika perlu */
+}
