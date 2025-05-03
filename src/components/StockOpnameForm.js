@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import './StockOpnameForm.css';
 import barangData from './data/dataBarang.json'; // Import data barang dari file JSON
 
@@ -21,7 +21,6 @@ function StockOpnameForm({ onBackToMenu }) {
   const [namaSuggestions, setNamaSuggestions] = useState([]);
 
   const [loading, setLoading] = useState(false);
-  // const debounceTimer = useRef(null); // Debounce timer tidak digunakan, dihapus
 
   // Ambil daftar kode dan nama barang dari data JSON dan pastikan aman
   const mockKodeBarang = barangData
@@ -34,11 +33,11 @@ function StockOpnameForm({ onBackToMenu }) {
 
   const findBarangByKode = useCallback((kode) => {
     return barangData.find(barang => typeof barang?.Code === 'string' && barang.Code.toLowerCase() === kode?.toLowerCase());
-  }, [barangData]); // barangData sebagai dependensi (mungkin tidak perlu, tapi untuk kejelasan)
+  }, []);
 
   const findBarangByNama = useCallback((nama) => {
     return barangData.find(barang => typeof barang?.Product === 'string' && barang.Product.toLowerCase() === nama?.toLowerCase());
-  }, [barangData]); // barangData sebagai dependensi (mungkin tidak perlu, tapi untuk kejelasan)
+  }, []);
 
   const resetForm = useCallback(() => {
     setNamaUser('');
