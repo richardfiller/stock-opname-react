@@ -93,6 +93,68 @@ function StockOpnameForm({ onBackToMenu }) {
           setNamaSuggestions([]);
         }
         break;
+		switch (name) {
+      case 'namaUser':
+        setNamaUser(value);
+        break;
+      case 'lokasi':
+        setLokasi(value);
+        break;
+      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
+        setKodeCabang(value);
+        break;
+      case 'kodeBarang':
+        setKodeBarang(value);
+        if (value.trim().length > 2) {
+          const filteredKode = mockKodeBarang.filter(kode =>
+            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+          ).slice(0, 5);
+          setKodeSuggestions(filteredKode);
+        } else {
+          setKodeSuggestions([]);
+        }
+        break;
+      case 'namaBarang':
+        setNamaBarang(value);
+        if (value.trim().length > 2) {
+          const filteredNama = mockNamaBarang.filter(nama =>
+            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+          ).slice(0, 5);
+          setNamaSuggestions(filteredNama);
+        } else {
+          setNamaSuggestions([]);
+        }
+        break;
+      case 'expDate':
+        const numbersOnly = value.replace(/[^0-9]/g, '');
+        let formattedValue = '';
+        if (numbersOnly.length > 0) {
+          if (numbersOnly.length <= 2) {
+            formattedValue = numbersOnly;
+          } else if (numbersOnly.length <= 4) {
+            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2)}`;
+          } else if (numbersOnly.length <= 8) {
+            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2, 4)}/${numbersOnly.slice(4)}`;
+          } else {
+            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2, 4)}/${numbersOnly.slice(4, 8)}`;
+          }
+        }
+        if (formattedValue.length <= 10) {
+          setExpDate(formattedValue);
+        }
+        break;
+      case 'nomorLot':
+        setNomorLot(value);
+        break;
+      case 'jumlah':
+        setJumlah(value);
+        break;
+      case 'keterangan':
+        setKeterangan(value);
+        break;
+      default:
+        break; // Tambahkan default case di sini
+    }
       // ... bagian lain dari switch case ...
     }
   }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors, mockKodeBarang, mockNamaBarang]);
