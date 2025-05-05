@@ -108,11 +108,11 @@ function StockOpnameForm({ onBackToMenu }) {
           if (numbersOnly.length <= 2) {
             formattedValue = numbersOnly;
           } else if (numbersOnly.length <= 4) {
-            formattedValue = `<span class="math-inline">\{numbersOnly\.slice\(0, 2\)\}/</span>{numbersOnly.slice(2)}`;
+            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2)}`;
           } else if (numbersOnly.length <= 8) {
-            formattedValue = `<span class="math-inline">\{numbersOnly\.slice\(0, 2\)\}/</span>{numbersOnly.slice(2, 4)}/${numbersOnly.slice(4)}`;
+            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2, 4)}/${numbersOnly.slice(4)}`;
           } else {
-            formattedValue = `<span class="math-inline">\{numbersOnly\.slice\(0, 2\)\}/</span>{numbersOnly.slice(2, 4)}/${numbersOnly.slice(4, 8)}`;
+            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2, 4)}/${numbersOnly.slice(4, 8)}`;
           }
         }
         if (formattedValue.length <= 10) {
@@ -218,7 +218,7 @@ function StockOpnameForm({ onBackToMenu }) {
         let formattedExpDate = expDate;
         if (expDate.includes('/')) {
           const [day, month, year] = expDate.split('/');
-          formattedExpDate = `<span class="math-inline">\{year\}\-</span>{month}-${day}`;
+          formattedExpDate = `${year}-${month}-${day}`;
         }
 
         const response = await fetch(WEB_APP_URL, {
