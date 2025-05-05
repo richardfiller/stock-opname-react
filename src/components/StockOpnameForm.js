@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './StockOpnameForm.css';
 import barangData from './data/dataBarang.json';
 
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwrnUCUmv4z1k8ifdbBATTwDNGVQKLnqfrCObR-wNEVZ6rweVV8nZaVXl-38zH-FZwbIg/exec';
+const WEB_APP_URL = '/.netlify/functions/submit-stock';
 
 function StockOpnameForm({ onBackToMenu }) {
   // State form

@@ -3,7 +3,7 @@ import './MainMenu.css';
 
 function MainMenu({ onSelectMenu }) {
   const handleExportData = () => {
-    window.open('http://localhost:5000/api/stock-opname/export');
+    window.open('/.netlify/functions/export-stock');
   };
 
   return (
