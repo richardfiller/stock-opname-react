@@ -66,19 +66,11 @@ function StockOpnameForm({ onBackToMenu }) {
     setErrors({});
   }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors]);
 
-  const handleInputChange = useCallback((event) => {
+ const handleInputChange = useCallback((event) => {
     const { name, value } = event.target;
     setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
     switch (name) {
-      case 'namaUser':
-        setNamaUser(value);
-        break;
-      case 'lokasi':
-        setLokasi(value);
-        break;
-      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
-        setKodeCabang(value);
-        break;
+      // ... bagian lain dari switch case ...
       case 'kodeBarang':
         setKodeBarang(value);
         if (value.trim().length > 2) {
@@ -101,35 +93,7 @@ function StockOpnameForm({ onBackToMenu }) {
           setNamaSuggestions([]);
         }
         break;
-      case 'expDate':
-        const numbersOnly = value.replace(/[^0-9]/g, '');
-        let formattedValue = '';
-        if (numbersOnly.length > 0) {
-          if (numbersOnly.length <= 2) {
-            formattedValue = numbersOnly;
-          } else if (numbersOnly.length <= 4) {
-            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2)}`;
-          } else if (numbersOnly.length <= 8) {
-            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2, 4)}/${numbersOnly.slice(4)}`;
-          } else {
-            formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2, 4)}/${numbersOnly.slice(4, 8)}`;
-          }
-        }
-        if (formattedValue.length <= 10) {
-          setExpDate(formattedValue);
-        }
-        break;
-      case 'nomorLot':
-        setNomorLot(value);
-        break;
-      case 'jumlah':
-        setJumlah(value);
-        break;
-      case 'keterangan':
-        setKeterangan(value);
-        break;
-      default:
-        break;
+      // ... bagian lain dari switch case ...
     }
   }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors, mockKodeBarang, mockNamaBarang]);
 
