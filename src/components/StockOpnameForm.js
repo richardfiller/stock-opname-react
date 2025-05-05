@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import './StockOpnameForm.css';
-import barangData from './data/dataBarang.json'; // Import data barang dari file JSON
+import barangData from './data/dataBarang.json';
 
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzD1G2UFX0i5SV4qMDHwWqpUV7Ge3BYYXb9eAAjQm8Xa73ORffaVU3pfo1iJHoUAlykPw/exec';
 
@@ -8,7 +8,7 @@ function StockOpnameForm({ onBackToMenu }) {
   // State form
   const [namaUser, setNamaUser] = useState('');
   const [lokasi, setLokasi] = useState('');
-  const [kodeCabang, setKodeCabang] = useState(''); // State untuk kode cabang
+  const [kodeCabang, setKodeCabang] = useState('');
   const [kodeBarang, setKodeBarang] = useState('');
   const [namaBarang, setNamaBarang] = useState('');
   const [expDate, setExpDate] = useState('');
@@ -26,15 +26,14 @@ function StockOpnameForm({ onBackToMenu }) {
   const [loading, setLoading] = useState(false);
 
   // Daftar pilihan Kode Cabang - Nama Cabang
-  const daftarCabang = [
-    "C049-Pontianak",
-    "C039-Tangerang",
-    "C041-Bogor",
-    "C013-Bandung",
-    "C006-Jakarta",
-    "C035-Bekasi",
-    // Tambahkan daftar lengkap cabang Anda di sini
-  ];
+    const daftarCabang = [
+        "C049-Pontianak",
+        "C039-Tangerang",
+        "C041-Bogor",
+        "C013-Bandung",
+        "C006-Jakarta",
+        "C035-Bekasi",
+    ];
 
   // Ambil daftar kode dan nama barang dari data JSON
   const mockKodeBarang = barangData
@@ -56,7 +55,7 @@ function StockOpnameForm({ onBackToMenu }) {
   const resetForm = useCallback(() => {
     setNamaUser('');
     setLokasi('');
-    setKodeCabang(''); // Reset kodeCabang
+    setKodeCabang('');
     setKodeBarang('');
     setNamaBarang('');
     setExpDate('');
@@ -66,70 +65,69 @@ function StockOpnameForm({ onBackToMenu }) {
     setErrors({});
   }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors]);
 
- const handleInputChange = useCallback((event) => {
-    const { name, value } = event.target;
-    setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
-    switch (name) {
-      case 'namaUser':
-        setNamaUser(value);
-        break;
-      case 'lokasi':
-        setLokasi(value);
-        break;
-      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
-        setKodeCabang(value);
-        break;
-      case 'kodeBarang':
-        setKodeBarang(value);
-        if (value.trim().length > 2) {
-          const filteredKode = mockKodeBarang.filter(kode =>
-            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
-          ).slice(0, 5);
-          setKodeSuggestions(filteredKode);
-        } else {
-          setKodeSuggestions([]);
-        }
-        break;
-      case 'namaBarang':
-        setNamaBarang(value);
-        if (value.trim().length > 2) {
-          const filteredNama = mockNamaBarang.filter(nama =>
-            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
-          ).slice(0, 5);
-          setNamaSuggestions(filteredNama);
-        } else {
-          setNamaSuggestions([]);
-        }
-        break;
-      case 'expDate':
-  const numbersOnly = value.replace(/[^0-9]/g, '');
-  let formattedValue = numbersOnly;
+    const handleInputChange = useCallback((event) => {
+        const { name, value } = event.target;
+        setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
+        switch (name) {
+            case 'namaUser':
+                setNamaUser(value);
+                break;
+            case 'lokasi':
+                setLokasi(value);
+                break;
+            case 'kodeCabang':
+                setKodeCabang(value);
+                break;
+            case 'kodeBarang':
+                setKodeBarang(value);
+                if (value.trim().length > 2) {
+                    const filteredKode = mockKodeBarang.filter(kode =>
+                        kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+                    ).slice(0, 5);
+                    setKodeSuggestions(filteredKode);
+                } else {
+                    setKodeSuggestions([]);
+                }
+                break;
+            case 'namaBarang':
+                setNamaBarang(value);
+                if (value.trim().length > 2) {
+                    const filteredNama = mockNamaBarang.filter(nama =>
+                        nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+                    ).slice(0, 5);
+                    setNamaSuggestions(filteredNama);
+                } else {
+                    setNamaSuggestions([]);
+                }
+                break;
+            case 'expDate':
+                const numbersOnly = value.replace(/[^0-9]/g, '');
+                let formattedValue = numbersOnly;
 
-  if (numbersOnly.length > 2) {
-    formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2)}`;
-  }
-  if (numbersOnly.length > 4) {
-    formattedValue = `${formattedValue.slice(0, 5)}/${numbersOnly.slice(4, 8)}`;
-  }
+                if (numbersOnly.length > 2) {
+                    formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2)}`;
+                }
+                if (numbersOnly.length > 4) {
+                    formattedValue = `${formattedValue.slice(0, 5)}/${numbersOnly.slice(4, 8)}`;
+                }
 
-  if (formattedValue.length <= 10) {
-    setExpDate(formattedValue);
-  }
-  break;
-      case 'nomorLot':
-        setNomorLot(value);
-        break;
-      case 'jumlah':
-        setJumlah(value);
-        break;
-      case 'keterangan':
-        setKeterangan(value);
-        break;
-      default:
-        break;
-    }
-  }, [setErrors, mockKodeBarang, mockNamaBarang]); // <-- Tambahkan kurung kurawal di sini
-
+                if (formattedValue.length <= 10) {
+                    setExpDate(formattedValue);
+                }
+                break;
+            case 'nomorLot':
+                setNomorLot(value);
+                break;
+            case 'jumlah':
+                setJumlah(value);
+                break;
+            case 'keterangan':
+                setKeterangan(value);
+                break;
+            default:
+                break;
+        }
+    }, [setErrors, mockKodeBarang, mockNamaBarang]);
 
   const handleKodeSuggestionClick = useCallback((suggestion) => {
     setKodeBarang(suggestion);
@@ -162,7 +160,7 @@ function StockOpnameForm({ onBackToMenu }) {
       newErrors.lokasi = 'Lokasi wajib diisi';
       isValid = false;
     }
-    if (!kodeCabang) { // Validasi kode cabang
+    if (!kodeCabang) {
       newErrors.kodeCabang = 'Kode Cabang wajib dipilih';
       isValid = false;
     }
@@ -212,37 +210,41 @@ function StockOpnameForm({ onBackToMenu }) {
     if (isValid) {
       setLoading(true);
       try {
-        // Format expDate menjadiYYYY-MM-DD
+        // Format expDate menjadi YYYY-MM-DD
         let formattedExpDate = expDate;
         if (expDate.includes('/')) {
           const [day, month, year] = expDate.split('/');
           formattedExpDate = `${year}-${month}-${day}`;
         }
 
+        const data = {
+          namaUser,
+          lokasi,
+          kodeCabang,
+          kodeBarang,
+          namaBarang,
+          expDate: formattedExpDate,
+          nomorLot,
+          jumlah: parseInt(jumlah, 10),
+          keterangan,
+        };
+
+        console.log('Data yang akan dikirim:', data);
+        console.log('URL:', WEB_APP_URL);
+
         const response = await fetch(WEB_APP_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            namaUser,
-            lokasi,
-            kodeCabang,
-            kodeBarang,
-            namaBarang,
-            expDate: formattedExpDate,
-            nomorLot,
-            jumlah: parseInt(jumlah, 10),
-            keterangan,
-          }),
+          body: JSON.stringify(data),
         });
 
         console.log('Response Status:', response.status);
 
         if (response.ok) {
-          const data = await response.json();
-          console.log('Data saved successfully:', data);
-          console.log('resetForm() dipanggil dari handleSubmit');
+          const responseData = await response.json();
+          console.log('Data saved successfully:', responseData);
           resetForm();
         } else {
           console.error('Failed to save data:', response.status);
@@ -255,7 +257,7 @@ function StockOpnameForm({ onBackToMenu }) {
         setLoading(false);
       }
     }
-  }, [namaUser, lokasi, kodeCabang, kodeBarang, namaBarang, expDate, nomorLot, jumlah, keterangan, errors, setErrors, resetForm, setLoading]); // findBarangByKode, findBarangByNama dihapus dari dependencies
+  }, [namaUser, lokasi, kodeCabang, kodeBarang, namaBarang, expDate, nomorLot, jumlah, keterangan, errors, setErrors, resetForm, setLoading]);
 
   const [backButtonStyle, setBackButtonStyle] = useState({});
 
