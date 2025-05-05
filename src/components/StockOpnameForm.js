@@ -94,7 +94,7 @@ function StockOpnameForm({ onBackToMenu }) {
         setNamaBarang(value);
         if (value.trim().length > 2) {
           const filteredNama = mockNamaBarang.filter(nama =>
-            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
           ).slice(0, 5);
           setNamaSuggestions(filteredNama);
         } else {
