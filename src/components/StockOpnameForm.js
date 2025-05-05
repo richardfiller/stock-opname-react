@@ -70,30 +70,6 @@ function StockOpnameForm({ onBackToMenu }) {
     const { name, value } = event.target;
     setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
     switch (name) {
-      // ... bagian lain dari switch case ...
-      case 'kodeBarang':
-        setKodeBarang(value);
-        if (value.trim().length > 2) {
-          const filteredKode = mockKodeBarang.filter(kode =>
-            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
-          ).slice(0, 5);
-          setKodeSuggestions(filteredKode);
-        } else {
-          setKodeSuggestions([]);
-        }
-        break;
-      case 'namaBarang':
-        setNamaBarang(value);
-        if (value.trim().length > 2) {
-          const filteredNama = mockNamaBarang.filter(nama =>
-            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
-          ).slice(0, 5);
-          setNamaSuggestions(filteredNama);
-        } else {
-          setNamaSuggestions([]);
-        }
-        break;
-		switch (name) {
       case 'namaUser':
         setNamaUser(value);
         break;
@@ -155,8 +131,7 @@ function StockOpnameForm({ onBackToMenu }) {
       default:
         break; // Tambahkan default case di sini
     }
-      // ... bagian lain dari switch case ...
-    }
+  }, [setErrors, mockKodeBarang, mockNamaBarang]);
   }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors, mockKodeBarang, mockNamaBarang]);
 
   const handleKodeSuggestionClick = useCallback((suggestion) => {
