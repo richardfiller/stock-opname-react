@@ -132,7 +132,7 @@ function StockOpnameForm({ onBackToMenu }) {
         break; // Tambahkan default case di sini
     }
   }, [setErrors, mockKodeBarang, mockNamaBarang]);
-  }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors, mockKodeBarang, mockNamaBarang]);
+
 
   const handleKodeSuggestionClick = useCallback((suggestion) => {
     setKodeBarang(suggestion);
