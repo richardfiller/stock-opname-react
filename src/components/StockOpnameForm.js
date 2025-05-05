@@ -447,4 +447,4 @@ function StockOpnameForm({ onBackToMenu }) {
   );
 }
 
-export default
+export default StockOpnameForm;
