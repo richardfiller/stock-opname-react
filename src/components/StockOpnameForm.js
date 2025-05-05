@@ -2,15 +2,15 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './StockOpnameForm.css';
 import barangData from './data/dataBarang.json'; // Import data barang dari file JSON
 
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby9PSwcuRkBCq5Xvr2NTBnpp-g3ip9-fo9w-zR7gOprzlhg6y7io7k4NuKb2GoKYmFRew/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyvvPo1pUSFS_eUxjz3RNf7YK7kdEILuskBCi99yFS84iaKxgp3Es4Ri8OTAS13WiESug/exec';
 
 function StockOpnameForm({ onBackToMenu }) {
   // State form
   const [namaUser, setNamaUser] = useState('');
   const [lokasi, setLokasi] = useState('');
   const [kodeCabang, setKodeCabang] = useState(''); // State untuk kode cabang
-  const [kodeBarang, setKodeBarang] = useState('');
-  const [namaBarang, setNamaBarang] = useState('');
+  const [kodeBarang, setKodeBarang] useState('');
+  const [namaBarang, setNamaBarang] useState('');
   const [expDate, setExpDate] = useState('');
   const [nomorLot, setNomorLot] = useState('');
   const [jumlah, setJumlah] = useState('');
