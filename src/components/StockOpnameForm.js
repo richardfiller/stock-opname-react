@@ -70,7 +70,15 @@ function StockOpnameForm({ onBackToMenu }) {
     const { name, value } = event.target;
     setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
     switch (name) {
-      // ... kode lainnya ...
+      case 'namaUser':
+        setNamaUser(value);
+        break;
+      case 'lokasi':
+        setLokasi(value);
+        break;
+      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
+        setKodeCabang(value);
+        break;
       case 'kodeBarang':
         setKodeBarang(value);
         if (value.trim().length > 2) {
@@ -93,9 +101,21 @@ function StockOpnameForm({ onBackToMenu }) {
           setNamaSuggestions([]);
         }
         break;
-      // ... kode lainnya ...
+      case 'expDate':
+        // ... kode untuk expDate ...
+        break;
+      case 'nomorLot':
+        setNomorLot(value);
+        break;
+      case 'jumlah':
+        setJumlah(value);
+        break;
+      case 'keterangan':
+        setKeterangan(value);
+        break;
+      default:
+        break;
     }
-  }, [setErrors, mockKodeBarang, mockNamaBarang]);
 
 
   const handleKodeSuggestionClick = useCallback((suggestion) => {
