@@ -28,7 +28,8 @@ label {
 
 input[type="text"],
 input[type="number"],
-textarea {
+textarea,
+select.form-control { /* Tambahkan selector untuk select */
   width: 100%;
   padding: 8px;
   border: 1px solid #ddd;
@@ -94,4 +95,23 @@ button[type="button"]:hover {
 
 .suggestions li:hover {
   background-color: #f0f0f0;
+}
+
+/* Styling tambahan untuk select (dropdown) */
+select.form-control {
+  background-color: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 10px);
+  background-position-y: 50%;
+  padding-right: 30px; /* Beri ruang untuk arrow */
+}
+
+select.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }

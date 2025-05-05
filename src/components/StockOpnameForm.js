@@ -2,10 +2,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './StockOpnameForm.css';
 import barangData from './data/dataBarang.json'; // Import data barang dari file JSON
 
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby9PSwcuRkBCq5Xvr2NTBnpp-g3ip9-fo9w-zR7gOprzlhg6y7io7k4NuKb2GoKYmFRew/exec';
+
 function StockOpnameForm({ onBackToMenu }) {
   // State form
   const [namaUser, setNamaUser] = useState('');
   const [lokasi, setLokasi] = useState('');
+  const [kodeCabang, setKodeCabang] = useState(''); // State untuk kode cabang
   const [kodeBarang, setKodeBarang] = useState('');
   const [namaBarang, setNamaBarang] = useState('');
   const [expDate, setExpDate] = useState('');
@@ -22,7 +25,18 @@ function StockOpnameForm({ onBackToMenu }) {
 
   const [loading, setLoading] = useState(false);
 
-  // Ambil daftar kode dan nama barang dari data JSON dan pastikan aman
+  // Daftar pilihan Kode Cabang - Nama Cabang
+  const daftarCabang = [
+    "C049-Pontianak",
+    "C039-Tangerang",
+    "C041-Bogor",
+    "C013-Bandung",
+    "C006-Jakarta",
+    "C035-Bekasi",
+    // Tambahkan daftar lengkap cabang Anda di sini
+  ];
+
+  // Ambil daftar kode dan nama barang dari data JSON
   const mockKodeBarang = barangData
     .map(item => item ? item.Code : undefined)
     .filter(kode => typeof kode === 'string');
@@ -42,6 +56,7 @@ function StockOpnameForm({ onBackToMenu }) {
   const resetForm = useCallback(() => {
     setNamaUser('');
     setLokasi('');
+    setKodeCabang(''); // Reset kodeCabang
     setKodeBarang('');
     setNamaBarang('');
     setExpDate('');
@@ -49,7 +64,7 @@ function StockOpnameForm({ onBackToMenu }) {
     setJumlah('');
     setKeterangan('');
     setErrors({});
-  }, [setNamaUser, setLokasi, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors]);
+  }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors]);
 
   const handleInputChange = useCallback((event) => {
     const { name, value } = event.target;
@@ -60,6 +75,9 @@ function StockOpnameForm({ onBackToMenu }) {
         break;
       case 'lokasi':
         setLokasi(value);
+        break;
+      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
+        setKodeCabang(value);
         break;
       case 'kodeBarang':
         setKodeBarang(value);
@@ -113,7 +131,7 @@ function StockOpnameForm({ onBackToMenu }) {
       default:
         break;
     }
-  }, [setNamaUser, setLokasi, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors, mockKodeBarang, mockNamaBarang]); // Hapus kodeSuggestions dan namaSuggestions dari dependensi
+  }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors, mockKodeBarang, mockNamaBarang]);
 
   const handleKodeSuggestionClick = useCallback((suggestion) => {
     setKodeBarang(suggestion);
@@ -122,7 +140,7 @@ function StockOpnameForm({ onBackToMenu }) {
     if (barang) {
       setNamaBarang(barang.Product || '');
     }
-  }, [setKodeBarang, findBarangByKode, setNamaBarang]); // Hapus setKodeSuggestions dari dependensi
+  }, [setKodeBarang, findBarangByKode, setNamaBarang]);
 
   const handleNamaSuggestionClick = useCallback((suggestion) => {
     setNamaBarang(suggestion);
@@ -131,7 +149,7 @@ function StockOpnameForm({ onBackToMenu }) {
     if (barang) {
       setKodeBarang(barang.Code || '');
     }
-  }, [setNamaBarang, findBarangByNama, setKodeBarang]); // Hapus setNamaSuggestions dari dependensi
+  }, [setNamaBarang, findBarangByNama, setKodeBarang]);
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -144,6 +162,10 @@ function StockOpnameForm({ onBackToMenu }) {
     }
     if (!lokasi.trim()) {
       newErrors.lokasi = 'Lokasi wajib diisi';
+      isValid = false;
+    }
+    if (!kodeCabang) { // Validasi kode cabang
+      newErrors.kodeCabang = 'Kode Cabang wajib dipilih';
       isValid = false;
     }
     if (!kodeBarang.trim()) {
@@ -201,7 +223,7 @@ function StockOpnameForm({ onBackToMenu }) {
           formattedExpDate = `${year}-${month}-${day}`;
         }
 
-        const response = await fetch('http://localhost:5000/api/stock-opname/submit', {
+        const response = await fetch(WEB_APP_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -209,22 +231,23 @@ function StockOpnameForm({ onBackToMenu }) {
           body: JSON.stringify({
             namaUser,
             lokasi,
+            kodeCabang,
             kodeBarang,
             namaBarang,
-            expDate: formattedExpDate, // Gunakan formattedExpDate
+            expDate: formattedExpDate,
             nomorLot,
             jumlah: parseInt(jumlah, 10),
             keterangan,
           }),
         });
 
-        console.log('Response Status:', response.status); // Tambahkan log status response
+        console.log('Response Status:', response.status);
 
         if (response.ok) {
           const data = await response.json();
           console.log('Data saved successfully:', data);
-          console.log('resetForm() dipanggil dari handleSubmit'); // Tambahkan log sebelum resetForm
-          resetForm(); // Panggil resetForm setelah berhasil menyimpan
+          console.log('resetForm() dipanggil dari handleSubmit');
+          resetForm();
         } else {
           console.error('Failed to save data:', response.status);
           const errorData = await response.json();
@@ -236,7 +259,7 @@ function StockOpnameForm({ onBackToMenu }) {
         setLoading(false);
       }
     }
-  }, [namaUser, lokasi, kodeBarang, namaBarang, expDate, nomorLot, jumlah, keterangan, errors, setErrors, resetForm, setLoading]); // Pastikan resetForm ada di dependensi
+  }, [namaUser, lokasi, kodeCabang, kodeBarang, namaBarang, expDate, nomorLot, jumlah, keterangan, errors, setErrors, resetForm, setLoading, findBarangByKode, findBarangByNama]);
 
   const [backButtonStyle, setBackButtonStyle] = useState({});
 
@@ -272,6 +295,25 @@ function StockOpnameForm({ onBackToMenu }) {
       </div>
 
       <form onSubmit={handleSubmit}>
+        {/* Pindahkan Kode Cabang ke atas Nama User */}
+        <div className="form-group">
+          <label htmlFor="kodeCabang">Kode Cabang:</label>
+          <select
+            id="kodeCabang"
+            name="kodeCabang"
+            value={kodeCabang}
+            onChange={handleInputChange}
+            className="form-control"
+            required
+          >
+            <option value="">-- Pilih Cabang --</option>
+            {daftarCabang.map(cabang => (
+              <option key={cabang.split('-')[0]} value={cabang.split('-')[0]}>{cabang}</option>
+            ))}
+          </select>
+          {errors.kodeCabang && <p className="error-message">{errors.kodeCabang}</p>}
+        </div>
+
         <div className="form-group">
           <label htmlFor="namaUser">Nama User:</label>
           <input
