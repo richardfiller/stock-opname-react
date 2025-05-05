@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './StockOpnameForm.css';
 import barangData from './data/dataBarang.json';
 
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby6i-BemDtO26woNRzDxM0KtPGkS40uhVmcwT2R8JmjdTdVcL1qw7aYO1ffI_oIGT2IhA/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwrnUCUmv4z1k8ifdbBATTwDNGVQKLnqfrCObR-wNEVZ6rweVV8nZaVXl-38zH-FZwbIg/exec';
 
 function StockOpnameForm({ onBackToMenu }) {
   // State form
