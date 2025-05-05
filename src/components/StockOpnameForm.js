@@ -67,55 +67,56 @@ function StockOpnameForm({ onBackToMenu }) {
   }, [setNamaUser, setLokasi, setKodeCabang, setKodeBarang, setNamaBarang, setExpDate, setNomorLot, setJumlah, setKeterangan, setErrors]);
 
  const handleInputChange = useCallback((event) => {
-    const { name, value } = event.target;
-    setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
-    switch (name) {
-      case 'namaUser':
-        setNamaUser(value);
-        break;
-      case 'lokasi':
-        setLokasi(value);
-        break;
-      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
-        setKodeCabang(value);
-        break;
-      case 'kodeBarang':
-        setKodeBarang(value);
-        if (value.trim().length > 2) {
-          const filteredKode = mockKodeBarang.filter(kode =>
-            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
-          ).slice(0, 5);
-          setKodeSuggestions(filteredKode);
-        } else {
-          setKodeSuggestions([]);
-        }
-        break;
-      case 'namaBarang':
-        setNamaBarang(value);
-        if (value.trim().length > 2) {
-          const filteredNama = mockNamaBarang.filter(nama =>
-            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
-          ).slice(0, 5);
-          setNamaSuggestions(filteredNama);
-        } else {
-          setNamaSuggestions([]);
-        }
-        break;
-      case 'expDate':
-        // ... kode untuk expDate ...
-        break;
-      case 'nomorLot':
-        setNomorLot(value);
-        break;
-      case 'jumlah':
-        setJumlah(value);
-        break;
-      case 'keterangan':
-        setKeterangan(value);
-        break;
-      default:
-        break;
-    }
+    const { name, value } = event.target;
+    setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
+    switch (name) {
+      case 'namaUser':
+        setNamaUser(value);
+        break;
+      case 'lokasi':
+        setLokasi(value);
+        break;
+      case 'kodeCabang': // Handle perubahan pada dropdown kode cabang
+        setKodeCabang(value);
+        break;
+      case 'kodeBarang':
+        setKodeBarang(value);
+        if (value.trim().length > 2) {
+          const filteredKode = mockKodeBarang.filter(kode =>
+            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+          ).slice(0, 5);
+          setKodeSuggestions(filteredKode);
+        } else {
+          setKodeSuggestions([]);
+        }
+        break;
+      case 'namaBarang':
+        setNamaBarang(value);
+        if (value.trim().length > 2) {
+          const filteredNama = mockNamaBarang.filter(nama =>
+            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
+          ).slice(0, 5);
+          setNamaSuggestions(filteredNama);
+        } else {
+          setNamaSuggestions([]);
+        }
+        break;
+      case 'expDate':
+        // ... kode untuk expDate ...
+        break;
+      case 'nomorLot':
+        setNomorLot(value);
+        break;
+      case 'jumlah':
+        setJumlah(value);
+        break;
+      case 'keterangan':
+        setKeterangan(value);
+        break;
+      default:
+        break;
+    }
+  }, [setErrors, mockKodeBarang, mockNamaBarang]); // <-- Tambahkan kurung kurawal di sini
 
 
   const handleKodeSuggestionClick = useCallback((suggestion) => {
