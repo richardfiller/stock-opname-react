@@ -216,7 +216,7 @@ function StockOpnameForm({ onBackToMenu }) {
     if (isValid) {
       setLoading(true);
       try {
-        // Format expDate menjadi YYYY-MM-DD
+        // Format expDate menjadiYYYY-MM-DD
         let formattedExpDate = expDate;
         if (expDate.includes('/')) {
           const [day, month, year] = expDate.split('/');
@@ -259,7 +259,7 @@ function StockOpnameForm({ onBackToMenu }) {
         setLoading(false);
       }
     }
-  }, [namaUser, lokasi, kodeCabang, kodeBarang, namaBarang, expDate, nomorLot, jumlah, keterangan, errors, setErrors, resetForm, setLoading, findBarangByKode, findBarangByNama]);
+  }, [namaUser, lokasi, kodeCabang, kodeBarang, namaBarang, expDate, nomorLot, jumlah, keterangan, errors, setErrors, resetForm, setLoading]); // findBarangByKode, findBarangByNama dihapus dari dependencies
 
   const [backButtonStyle, setBackButtonStyle] = useState({});
 
