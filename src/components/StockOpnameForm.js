@@ -102,8 +102,20 @@ function StockOpnameForm({ onBackToMenu }) {
         }
         break;
       case 'expDate':
-        // ... kode untuk expDate ...
-        break;
+  const numbersOnly = value.replace(/[^0-9]/g, '');
+  let formattedValue = numbersOnly;
+
+  if (numbersOnly.length > 2) {
+    formattedValue = `${numbersOnly.slice(0, 2)}/${numbersOnly.slice(2)}`;
+  }
+  if (numbersOnly.length > 4) {
+    formattedValue = `${formattedValue.slice(0, 5)}/${numbersOnly.slice(4, 8)}`;
+  }
+
+  if (formattedValue.length <= 10) {
+    setExpDate(formattedValue);
+  }
+  break;
       case 'nomorLot':
         setNomorLot(value);
         break;
