@@ -83,7 +83,7 @@ function StockOpnameForm({ onBackToMenu }) {
         setKodeBarang(value);
         if (value.trim().length > 2) {
           const filteredKode = mockKodeBarang.filter(kode =>
-            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase())
+            kode && typeof kode === 'string' && kode.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
           ).slice(0, 5);
           setKodeSuggestions(filteredKode);
         } else {
@@ -94,7 +94,7 @@ function StockOpnameForm({ onBackToMenu }) {
         setNamaBarang(value);
         if (value.trim().length > 2) {
           const filteredNama = mockNamaBarang.filter(nama =>
-            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase())
+            nama && typeof nama === 'string' && nama.toLowerCase().includes(value.toLowerCase().replace(/[{}\.()\-]/g, ''))
           ).slice(0, 5);
           setNamaSuggestions(filteredNama);
         } else {
@@ -181,19 +181,17 @@ function StockOpnameForm({ onBackToMenu }) {
       const dateParts = expDate.split('/');
       if (dateParts.length === 3) {
         const day = parseInt(dateParts[0], 10);
-        const month = parseInt(dateParts[1], 10);
-        const year = parseInt(dateParts[2], 10);
 
-        if (isNaN(day) || isNaN(month) || isNaN(year)) {
+        if (isNaN(day) || isNaN(parseInt(dateParts[1], 10)) || isNaN(parseInt(dateParts[2], 10))) {
           newErrors.expDate = 'Format Tanggal tidak valid (DD/MM/YYYY)';
           isValid = false;
-        } else if (month < 1 || month > 12) {
+        } else if (parseInt(dateParts[1], 10) < 1 || parseInt(dateParts[1], 10) > 12) {
           newErrors.expDate = 'Bulan harus antara 1 dan 12';
           isValid = false;
         } else {
-          const daysInMonth = new Date(year, month, 0).getDate();
+          const daysInMonth = new Date(parseInt(dateParts[2], 10), parseInt(dateParts[1], 10), 0).getDate();
           if (day < 1 || day > daysInMonth) {
-            newErrors.expDate = `Tanggal harus antara 1 dan ${daysInMonth} untuk bulan ${month}`;
+            newErrors.expDate = `Tanggal harus antara 1 dan ${daysInMonth} untuk bulan ${parseInt(dateParts[1], 10)}`;
             isValid = false;
           }
         }
